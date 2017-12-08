@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Register</h2>
+  </div>
+  <div class="card-body">
+    <form name="form" (ngSubmit)="register()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username"
+               required
+               [(ngModel)]="user.username" name="username">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email"
+               required
+               [(ngModel)]="user.email" name="email">
+      </div>
+      <div class="form-group">
+        <label for="plainPasswordfirst">Password</label>
+        <input type="password" class="form-control" id="plainPasswordfirst"
+               required
+               [(ngModel)]="user.plainPasswordfirst" name="plainPasswordfirst">
+      </div>
+      <div class="form-group">
+        <label for="plainPasswordsecond">Password Verification</label>
+        <input type="password" class="form-control" id="plainPasswordsecond"
+               required
+               [(ngModel)]="user.plainPasswordsecond" name="plainPasswordsecond">
+      </div>
+      <button type="button" class="btn btn-default" (click)="register()">Inscription</button>
+    </form>
+    <br>
+    <br>
+
+    <div *ngIf="statuserror" class="alert alert-danger">
+      {{status}}
+    </div>
+    <div *ngIf="statusok" class="alert alert-success">
+      {{status}}
+    </div>
+  </div>
+</div>

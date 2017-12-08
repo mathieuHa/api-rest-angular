@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Modifier le post</h2>
+  </div>
+  <div class="card-body">
+    <div class="alert alert-danger">La modification de post ne marche pas</div>
+    <form name="form" (ngSubmit)="editPost()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="titre">Titre</label>
+        <input type="text" class="form-control" id="titre"
+               required
+               [(ngModel)]="post.titre" name="description">
+      </div>
+      <div class="form-group">
+        <label for="texte">Texte</label>
+        <input type="text" class="form-control" id="texte"
+               required
+               [(ngModel)]="post.texte" name="texte">
+      </div>
+      <button type="button" class="btn btn-default" (click)="editPost()">Modifier</button>
+    </form>
+    <br>
+    <br>
+
+    <div *ngIf="statuserror" class="alert alert-danger">
+      Erreur dans la modification du post
+    </div>
+    <div *ngIf="statusok" class="alert alert-success">
+      Post Modifié
+    </div>
+    <br>
+    <br>
+
+    <a class="btn btn-success" routerLink="/list">Retour à la liste</a>
+  </div>
+
+
+</div>

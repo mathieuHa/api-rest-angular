@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Login</h2>
+  </div>
+  <div class="card-body">
+    <form name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username"
+               required
+               [(ngModel)]="user.username" name="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password"
+               required
+               [(ngModel)]="user.password" name="password">
+      </div>
+      <button type="button" class="btn btn-default" (click)="login()">Connexion</button>
+      <a class="btn btn-primary float-right" routerLink="/register">S'inscrire</a>
+
+    </form>
+    <br>
+    <br>
+
+    <div *ngIf="statuserror" class="alert alert-danger">
+      {{status}}
+    </div>
+    <div *ngIf="statusok" class="alert alert-success">
+      {{status}}
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Ajouter le post</h2>
+  </div>
+  <div class="card-body">
+    <form name="form" (ngSubmit)="addPost()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="titre">Titre</label>
+        <input type="text" class="form-control" id="titre"
+               required
+               [(ngModel)]="post.titre" name="description">
+      </div>
+      <div class="form-group">
+        <label for="texte">Texte</label>
+        <input type="text" class="form-control" id="texte"
+               required
+               [(ngModel)]="post.texte" name="texte">
+      </div>
+      <button type="button" class="btn btn-default" (click)="addPost()">Ajouter</button>
+    </form>
+    <br>
+    <br>
+
+    <div *ngIf="statuserror" class="alert alert-danger">
+      Erreur dans l'ajout du post
+    </div>
+    <div *ngIf="statusok" class="alert alert-success">
+      Post Ajouté
+    </div>
+  </div>
+</div>
