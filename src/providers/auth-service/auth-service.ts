@@ -10,25 +10,21 @@ import {Observable} from 'rxjs/Observable';
 */
 @Injectable()
 export class AuthServiceProvider {
-  private isLoggedIn = false;
-  private token;
-
+  api: string;
   constructor(private http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
+    this.api = 'http://localhost/base_symfony3_secure_api/web/app_dev.php/api/';
   }
   // Login a user
   // Normally make a server request and store
   // e.g. the auth token
   login(username, password): Observable<any> {
     const body = {
-      'username': username,
-      'password': password,
-      'grant_type': 'password',
-      'client_id': '1_3bcbxd9e24g0gk4swg0kwgcwg4o8k8g4g888kwc44gcc0gwwk4',
-      'client_secret': '4ok2x70rlfokc8g0wws8c8kwcokw80k44sg48goc0ok4w0so0k'
+      '_username': username,
+      '_password': password,
     };
     return this.http
-      .post('https://api-ndi.hanotaux.fr/api/oauth/v2/token', body);
+      .post(this.api + 'login_check', body);
   }
   register(username, email, password1, password2): Observable<any> {
     const body = {
@@ -40,34 +36,21 @@ export class AuthServiceProvider {
       }
     };
     return this.http
-      .post('https://api-ndi.hanotaux.fr/api/register', body);
+      .post(this.api + 'register', body);
   }
 
   // Logout a user, destroy token and remove
   // every information related to a user
   logout(): void {
     localStorage.removeItem('token_user');
-    this.isLoggedIn = false;
-    this.token = null;
   }
 
   // Returns whether the user is currently authenticated
   // Could check if current token is still valid
   authenticated(): boolean {
-    if (localStorage.getItem('token_user')) {
-      return true;
-    }
-    this.isLoggedIn = false;
-    this.token = null;
-    return false;
+    return !!localStorage.getItem('token_user');
   }
-
-  getToken(): boolean {
-    return this.token;
-  }
-
-  setToken() {
-    this.token = localStorage.getItem('token_user');
-    this.isLoggedIn = true;
+  getToken (): string {
+    return localStorage.getItem('token_user');
   }
 }

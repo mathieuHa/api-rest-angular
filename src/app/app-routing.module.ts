@@ -11,6 +11,7 @@ import {ViewPostComponent} from './view-post/view-post.component';
 
 const routes: Routes = [
   { path: '',  redirectTo: '/login', pathMatch: 'full'},
+  { path: 'logout',  redirectTo: '/login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'list', component: ListPostComponent,  canActivate: [AuthGuard] },

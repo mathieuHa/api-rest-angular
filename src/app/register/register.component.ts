@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import {Router} from "@angular/router";
+import {UserLogin} from "../user-login";
+import {UserRegister} from "../user-register";
+import {flush} from "@angular/core/testing";
 
 @Component({
   selector: 'app-register',
@@ -10,35 +13,33 @@ import {Router} from "@angular/router";
 export class RegisterComponent implements OnInit {
 
   status: string;
-  statuserror: boolean;
   statusok: boolean;
+  isSubmitted: boolean;
+  model = new UserRegister('', '', '', '');
   ngOnInit() {
   }
   constructor(private auth: AuthServiceProvider, private router: Router) {
-    this.statuserror = false;
     this.statusok = false;
+    this.isSubmitted = false;
   }
-  user = {};
 
   register() {
-    this.statuserror = false;
-    this.statusok = false;
-    console.log(this.user);
-    this.auth.register(this.user['username'], this.user['email'], this.user['plainPasswordfirst'], this.user['plainPasswordsecond'])
+    console.log(this.model);
+    this.auth.register(this.model['username'], this.model['email'], this.model['plainPasswordfirst'], this.model['plainPasswordsecond'])
       .subscribe(
         data => {
           console.log(data);
-          // localStorage.setItem('token', data['access_token']);
-          // console.log(JSON.stringify(localStorage));
-          // this.auth.setToken();
+          this.isSubmitted = true;
           this.status = 'Compte crée';
           this.statusok = true;
-         this.router.navigate(
-            ['/login']);
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1500);
         },
         error2 => {
+          this.isSubmitted = true;
           console.log(error2);
-          this.statuserror = true;
+          this.statusok = false;
           this.status = 'Erreur dans la création du compte';
         }
       );

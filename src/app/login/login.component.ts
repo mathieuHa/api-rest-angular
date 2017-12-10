@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import {Router, RouterModule} from "@angular/router";
+import {templateJitUrl} from "@angular/compiler";
+import {UserLogin} from "../user-login";
 
 @Component({
   selector: 'app-login',
@@ -9,34 +11,37 @@ import {Router, RouterModule} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   status: string;
-  statuserror: boolean;
   statusok: boolean;
+  isSubmitted: boolean;
+  model = new UserLogin('', '');
+
   ngOnInit() {
   }
   constructor(private auth: AuthServiceProvider, private router: Router) {
-    this.statuserror = false;
     this.statusok = false;
+    this.isSubmitted = false;
+    this.status = '';
   }
-  user = {};
 
   login() {
-    this.statuserror = false;
-    this.statusok = false;
-    console.log(this.user);
-    this.auth.login(this.user['username'], this.user['password'])
+    console.log('I am submitted');
+    console.log(this.model);
+    this.auth.login(this.model['username'], this.model['password'])
       .subscribe(
         data => {
+          this.isSubmitted = true;
           console.log(data);
-          localStorage.setItem('token_user', data['access_token']);
-          this.auth.setToken();
+          localStorage.setItem('token_user', data['token']);
           this.status = 'Connection validée';
           this.statusok = true;
-          this.router.navigate(
-            ['/list']);
+          setTimeout(() => {
+            this.router.navigate(['/list']);
+          }, 1500);
         },
         error2 => {
+          this.isSubmitted = true;
           console.log(error2);
-          this.statuserror = true;
+          this.statusok = false;
           this.status = 'Erreur d\'autentification';
         }
       );

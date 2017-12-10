@@ -3,41 +3,82 @@
     <h2>Register</h2>
   </div>
   <div class="card-body">
-    <form name="form" (ngSubmit)="register()" #f="ngForm" novalidate>
+
+    <form name="form">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username"
-               required
-               [(ngModel)]="user.username" name="username">
+               required minlength="3"
+               [(ngModel)]="model.username" name="username" #username="ngModel">
+      </div>
+
+      <div *ngIf="username.invalid && (username.dirty || username.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="username.errors.required">
+          Username is required.
+        </div>
+        <div *ngIf="username.errors.minlength">
+          Name must be at least 3 characters long.
+        </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email"
-               required
-               [(ngModel)]="user.email" name="email">
+               required  ngModel email="true"
+               [(ngModel)]="model.email" name="email" #email="ngModel">
+      </div>
+      <div [hidden]="email.valid || email.pristine"
+           class="alert alert-danger">
+        Email is required
       </div>
       <div class="form-group">
-        <label for="plainPasswordfirst">Password</label>
-        <input type="password" class="form-control" id="plainPasswordfirst"
-               required
-               [(ngModel)]="user.plainPasswordfirst" name="plainPasswordfirst">
+        <label for="password1">Password</label>
+        <input type="password" class="form-control" id="password1"
+               required  minlength="3"
+               [(ngModel)]="model.passwordOne" name="password1" #password1="ngModel">
+      </div>
+      <div *ngIf="password1.invalid && (password1.dirty || password1.touched)"
+           class="alert alert-danger">
+        <div *ngIf="password1.errors.required">
+          Password is required
+        </div>
+        <div *ngIf="password1.errors.minlength">
+          Password must be at least 3 characters long.
+        </div>
       </div>
       <div class="form-group">
-        <label for="plainPasswordsecond">Password Verification</label>
-        <input type="password" class="form-control" id="plainPasswordsecond"
-               required
-               [(ngModel)]="user.plainPasswordsecond" name="plainPasswordsecond">
+        <label for="password2">Password Verification</label>
+        <input type="password" class="form-control" id="password2"
+               required  minlength="3"
+               [(ngModel)]="model.passwordSecond" name="password2" #password2="ngModel">
+      </div>
+      <div *ngIf="password2.invalid && (password2.dirty || password2.touched)"
+           class="alert alert-danger">
+        <div *ngIf="password2.errors.required">
+          Password is required
+        </div>
+        <div *ngIf="password2.errors.minlength ">
+          Password must be at least 3 characters long.
+        </div>
+
+      </div>
+      <div *ngIf="model.passwordSecond != model.passwordOne && (password2.dirty || password2.touched)"
+        class="alert alert-danger">
+        Password does not match.
       </div>
       <button type="button" class="btn btn-default" (click)="register()">Inscription</button>
     </form>
     <br>
     <br>
 
-    <div *ngIf="statuserror" class="alert alert-danger">
+    <div *ngIf="!statusok  && isSubmitted" class="alert alert-danger">
       {{status}}
     </div>
-    <div *ngIf="statusok" class="alert alert-success">
+    <div *ngIf="statusok  && isSubmitted" class="alert alert-success">
       {{status}}
     </div>
+    {{model|json}}
+
   </div>
 </div>
