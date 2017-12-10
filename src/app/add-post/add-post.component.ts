@@ -10,11 +10,12 @@ import {Router} from '@angular/router';
 })
 export class AddPostComponent implements OnInit {
   post: Post;
-  private statuserror: boolean;
-  private statusok: boolean;
+  status: string;
+  statusok: boolean;
+  isSubmitted: boolean;
   constructor (private psp: PostServiceProvider, private router: Router) {
-    this.statuserror = false;
     this.statusok = false;
+    this.isSubmitted = false;
     this.post = new Post(1, '', '');
   }
 
@@ -22,20 +23,21 @@ export class AddPostComponent implements OnInit {
   }
 
   private addPost() {
-    this.statuserror = false;
     this.statusok = false;
     this.psp.addPosts(this.post)
       .subscribe(data => {
+        this.status = 'Post ajouté';
+        this.isSubmitted = true;
         console.log(data);
         this.statusok = true;
         this.post = data;
-        this.router.navigate(
-          ['/list']);
+        setTimeout(() => {
+          this.router.navigate(['/list']);
+        }, 1500);
       }, err => {
+        this.status = 'Erreur dans l\'ajout du post';
+        this.isSubmitted = true;
         console.log(err);
-        this.statuserror = true;
-        this.router.navigate(
-          ['/login']);
       });
   }
 

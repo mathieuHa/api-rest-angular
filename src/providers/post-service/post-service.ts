@@ -14,7 +14,7 @@ export class PostServiceProvider {
   private urlApi: string;
   constructor(public http: HttpClient, private auth: AuthServiceProvider) {
     console.log('Hello PostServiceProvider Provider');
-    this.urlApi = 'http://localhost/base_symfony3_secure_api/posts/';
+    this.urlApi = 'https://api.hanotaux.fr/api/posts';
   }
 
   getPosts(): Observable<any> {
@@ -26,7 +26,7 @@ export class PostServiceProvider {
 
   getPost(id): Observable<any> {
     return this.http
-      .get(this.urlApi + id, {
+      .get(this.urlApi + '/' + id, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.auth.getToken()),
       });
   }
@@ -40,14 +40,14 @@ export class PostServiceProvider {
 
   addComment(comment, id): Observable<any> {
     return this.http
-      .post(this.urlApi + id + '/comment', comment, {
+      .post(this.urlApi + '/' + id + '/comment', comment, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.auth.getToken()),
       });
   }
 
   deletePost(id): Observable<any> {
     return this.http
-      .delete(this.urlApi + id, {
+      .delete(this.urlApi + '/' + id, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.auth.getToken()),
       });
   }
@@ -55,7 +55,7 @@ export class PostServiceProvider {
   editPost(post, id): Observable<any> {
     console.log(this.auth.getToken());
     return this.http
-      .put(this.urlApi + id, post, {
+      .put(this.urlApi + '/' + id, post, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.auth.getToken()),
       });
   }

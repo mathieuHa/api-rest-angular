@@ -13,7 +13,7 @@ export class AuthServiceProvider {
   api: string;
   constructor(private http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
-    this.api = 'http://localhost/base_symfony3_secure_api/web/app_dev.php/api/';
+    this.api = 'https://api.hanotaux.fr/api/';
   }
   // Login a user
   // Normally make a server request and store

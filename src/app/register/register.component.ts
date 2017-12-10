@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
-import {Router} from "@angular/router";
-import {UserLogin} from "../user-login";
-import {UserRegister} from "../user-register";
-import {flush} from "@angular/core/testing";
+import {Router} from '@angular/router';
+import {UserLogin} from '../user-login';
+import {UserRegister} from '../user-register';
+import {flush} from '@angular/core/testing';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     console.log(this.model);
-    this.auth.register(this.model['username'], this.model['email'], this.model['plainPasswordfirst'], this.model['plainPasswordsecond'])
+    this.auth.register(this.model['username'], this.model['email'], this.model['passwordOne'], this.model['passwordSecond'])
       .subscribe(
         data => {
           console.log(data);
