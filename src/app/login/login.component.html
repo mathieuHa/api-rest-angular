@@ -1,44 +1,47 @@
-<div class="card">
-  <div class="card-header">
-    <h2>Login</h2>
-  </div>
-  <div class="card-body">
-    <form name="form">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username"
-               required
-               [(ngModel)]="model.username" name="username" #username="ngModel">
+<div class="row">
+  <div class="col"></div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">
+        <h2>Login</h2>
       </div>
-      <div [hidden]="username.valid || username.pristine"
-           class="alert alert-danger">
-        Username is required
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password"
-               required
-               [(ngModel)]="model.password" name="password" #password="ngModel">
-      </div>
-      <div [hidden]="password.valid || password.pristine"
-           class="alert alert-danger">
-        Password is required
-      </div>
-      <button type="button" class="btn btn-default" (click)="login()">Connexion</button>
-      <a class="btn btn-primary float-right" routerLink="/register">S'inscrire</a>
+      <div class="card-body">
+        <form name="form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username"
+                   required
+                   [(ngModel)]="model.username" name="username" #username="ngModel">
+          </div>
+          <div [hidden]="username.valid || username.pristine"
+               class="alert alert-danger">
+            Username is required
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password"
+                   required
+                   [(ngModel)]="model.password" name="password" #password="ngModel">
+          </div>
+          <div [hidden]="password.valid || password.pristine"
+               class="alert alert-danger">
+            Password is required
+          </div>
+          <button type="button" class="btn btn-default" (click)="login()">Connexion</button>
+          <a class="btn btn-primary float-right" routerLink="/register">S'inscrire</a>
 
-    </form>
-    <br>
-    <br>
+        </form>
+        <br>
+        <br>
 
-    <div *ngIf="!statusok  && isSubmitted" class="alert alert-danger">
-      {{status}}
-    </div>
-    <div *ngIf="statusok && isSubmitted" class="alert alert-success">
-      {{status}}
+        <div *ngIf="!statusok  && isSubmitted" class="alert alert-danger">
+          {{status}}
+        </div>
+        <div *ngIf="statusok && isSubmitted" class="alert alert-success">
+          {{status}}
+        </div>
+      </div>
     </div>
   </div>
+  <div class="col"></div>
 </div>
-
-
-

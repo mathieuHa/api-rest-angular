@@ -1,16 +1,18 @@
 <h1>Affichage des Post</h1>
 <br>
-<a class="btn btn-success" (click)="getPosts()">Charger les Posts</a>
-<div *ngFor="let post of postList">
+
+<app-add-post [post]='post'  (notify)='onNotify($event)'></app-add-post>
+<br><br>
+<div *ngFor="let post of postList" [@flyInOut]="in">
   <div  class="card">
     <div class="card-header">
       {{post.titre}}
     </div>
     <div class="card-body">
       {{post.texte}}
-      <a class="btn btn-danger btn-sm float-right" (click)="delete(post)">Supprimer</a>
-      <a class="btn btn-warning btn-sm float-right" routerLink="/edit/{{post.id}}">Modifier</a>
-      <a class="btn btn-success btn-sm float-right" routerLink="/view/{{post.id}}">Afficher</a>
+      <a class="btn btn-danger btn-sm float-right fa fa-trash" (click)="deletePost(post)"></a>
+      <a class="btn btn-warning btn-sm float-right fa fa-edit" routerLink="/edit/{{post.id}}"></a>
+
     </div>
   </div>
   <br>

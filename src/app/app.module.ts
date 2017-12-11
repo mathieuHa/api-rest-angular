@@ -15,6 +15,7 @@ import {AuthGuard} from './auth.guard';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import { ViewPostComponent } from './view-post/view-post.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ViewPostComponent } from './view-post/view-post.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthServiceProvider,

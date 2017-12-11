@@ -1,9 +1,6 @@
 <div class="card">
-  <div class="card-header">
-    <h2>Ajouter le post</h2>
-  </div>
   <div class="card-body">
-    <form name="form">
+    <form name="form" #addform="ngForm">
       <div class="form-group">
         <label for="titre">Titre</label>
         <input type="text" class="form-control" id="titre"
@@ -11,7 +8,7 @@
                [(ngModel)]="post.titre" name="titre" #titre="ngModel">
       </div>
 
-      <div *ngIf="titre.invalid && (titre.dirty || titre.touched)"
+      <div *ngIf="!isSubmitted && titre.invalid && (titre.dirty || titre.touched)"
            class="alert alert-danger">
 
         <div *ngIf="titre.errors.required">
@@ -28,7 +25,7 @@
                [(ngModel)]="post.texte" name="texte" #texte="ngModel">
       </div>
 
-      <div *ngIf="texte.invalid && (texte.dirty || texte.touched)"
+      <div *ngIf="!isSubmitted && texte.invalid && (texte.dirty || texte.touched)"
            class="alert alert-danger">
 
         <div *ngIf="texte.errors.required">
@@ -38,9 +35,8 @@
           Texte must be at least 6 characters long.
         </div>
       </div>
-      <button type="button" class="btn btn-default" (click)="addPost()">Ajouter</button>
+      <button type="button" class="btn btn-default" (click)="addPost();">Ajouter</button>
     </form>
-    <br>
     <br>
 
     <div *ngIf="statuserror" class="alert alert-danger">

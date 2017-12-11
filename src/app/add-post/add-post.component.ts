@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PostServiceProvider} from '../../providers/post-service/post-service';
 import {Post} from '../../Classes/Post';
 import {Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-add-post',
@@ -9,7 +11,9 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-post.component.css']
 })
 export class AddPostComponent implements OnInit {
-  post: Post;
+  @Input() post: Post;
+  @Output() notify: EventEmitter<string> = new EventEmitter<string>();
+  addform: NgForm;
   status: string;
   statusok: boolean;
   isSubmitted: boolean;
@@ -23,22 +27,29 @@ export class AddPostComponent implements OnInit {
   }
 
   private addPost() {
+    this.isSubmitted = true;
     this.statusok = false;
     this.psp.addPosts(this.post)
       .subscribe(data => {
         this.status = 'Post ajouté';
-        this.isSubmitted = true;
         console.log(data);
         this.statusok = true;
         this.post = data;
-        setTimeout(() => {
-          this.router.navigate(['/list']);
-        }, 1500);
+        console.log('Log Post in add' + JSON.stringify(this.post));
+        this.notify.emit('Click from nested component');
+        this.isSubmitted = false;
+
       }, err => {
+        console.log(err['error']['code']);
+        this.isSubmitted = false;
         this.status = 'Erreur dans l\'ajout du post';
-        this.isSubmitted = true;
         console.log(err);
+        if (err['error']['code'] === 401) {
+          this.router.navigate(['/login']);
+        }
       });
   }
+
+
 
 }

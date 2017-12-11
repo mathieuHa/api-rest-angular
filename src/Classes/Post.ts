@@ -12,6 +12,6 @@ export class Post {
   }
 
   toString() {
-    return 'Working';
+    return 'Post' + this.id + ' ' + this.titre + ' ' + this.texte;
   }
 }

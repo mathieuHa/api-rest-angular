@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import {AuthServiceProvider} from '../providers/auth-service/auth-service';
-import {stringify} from "querystring";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,7 +10,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | boolean {
     if (localStorage.getItem('token_user')) {
-      console.log(stringify(localStorage));
+      //console.log(stringify(localStorage));
       return true;
     }
     console.log('access denied!');
