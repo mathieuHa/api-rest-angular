@@ -2,8 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PostServiceProvider} from '../../providers/post-service/post-service';
 import {Post} from '../../Classes/Post';
 import {Router} from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
-import {NgForm} from "@angular/forms";
+import {PostwId} from '../../Classes/PostWId';
 
 @Component({
   selector: 'app-add-post',
@@ -13,14 +12,14 @@ import {NgForm} from "@angular/forms";
 export class AddPostComponent implements OnInit {
   @Input() post: Post;
   @Output() notify: EventEmitter<string> = new EventEmitter<string>();
-  addform: NgForm;
+  postWid: PostwId;
   status: string;
   statusok: boolean;
   isSubmitted: boolean;
   constructor (private psp: PostServiceProvider, private router: Router) {
     this.statusok = false;
     this.isSubmitted = false;
-    this.post = new Post(1, '', '');
+    this.post = new Post(1, '', '', null, null);
   }
 
   ngOnInit() {
@@ -29,14 +28,15 @@ export class AddPostComponent implements OnInit {
   private addPost() {
     this.isSubmitted = true;
     this.statusok = false;
-    this.psp.addPosts(this.post)
+    this.postWid = new PostwId(this.post);
+    this.psp.addPosts(this.postWid)
       .subscribe(data => {
         this.status = 'Post ajouté';
         console.log(data);
         this.statusok = true;
         this.post = data;
         console.log('Log Post in add' + JSON.stringify(this.post));
-        this.notify.emit('Click from nested component');
+        this.notify.emit(JSON.stringify(this.post));
         this.isSubmitted = false;
 
       }, err => {

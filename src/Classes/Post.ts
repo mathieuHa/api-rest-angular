@@ -6,9 +6,10 @@ export class Post {
   public texte: string;
   public comments: Comment[];
   public user: User;
+  public edit: boolean;
 
-  public constructor (id: number, titre: string, texte: string) {
-
+  public constructor (id: number, titre: string, texte: string, comments: Comment[], user: User) {
+    this.edit = false;
   }
 
   toString() {

@@ -6,7 +6,7 @@
         <h2>Login</h2>
       </div>
       <div class="card-body">
-        <form name="form">
+        <form name="form" #loginform="ngForm">
           <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username"
@@ -27,7 +27,7 @@
                class="alert alert-danger">
             Password is required
           </div>
-          <button type="button" class="btn btn-default" (click)="login()">Connexion</button>
+          <button *ngIf="loginform.form.valid" (click)="login()" type="button" class="btn btn-default">Connexion</button>
           <a class="btn btn-primary float-right" routerLink="/register">S'inscrire</a>
 
         </form>

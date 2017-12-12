@@ -1,25 +1,42 @@
 <div class="card">
-  <div class="card-header">
-    <h2>Modifier le post</h2>
-  </div>
   <div class="card-body">
-    <div class="alert alert-danger">La modification de post ne marche pas</div>
-    <form name="form" (ngSubmit)="editPost()" #f="ngForm" novalidate>
+    <form #editform="ngForm">
       <div class="form-group">
         <label for="titre">Titre</label>
         <input type="text" class="form-control" id="titre"
-               required
-               [(ngModel)]="post.titre" name="description">
+               required minlength="5"
+               [(ngModel)]="post.titre" name="titre" #titre="ngModel">
+      </div>
+
+      <div *ngIf="!isSubmitted && titre.invalid && (titre.dirty || titre.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="titre.errors.required">
+          Titre is required.
+        </div>
+        <div *ngIf="titre.errors.minlength">
+          Titre must be at least 5 characters long.
+        </div>
       </div>
       <div class="form-group">
         <label for="texte">Texte</label>
         <input type="text" class="form-control" id="texte"
-               required
-               [(ngModel)]="post.texte" name="texte">
+               required minlength="6"
+               [(ngModel)]="post.texte" name="texte" #texte="ngModel">
       </div>
-      <button type="button" class="btn btn-default" (click)="editPost()">Modifier</button>
+
+      <div *ngIf="!isSubmitted && texte.invalid && (texte.dirty || texte.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="texte.errors.required">
+          Texte is required.
+        </div>
+        <div *ngIf="texte.errors.minlength">
+          Texte must be at least 6 characters long.
+        </div>
+      </div>
+      <button *ngIf="editform.form.valid" (click)="editPost()" type="button" class="btn btn-default">Modifier</button>
     </form>
-    <br>
     <br>
 
     <div *ngIf="statuserror" class="alert alert-danger">
@@ -28,11 +45,5 @@
     <div *ngIf="statusok" class="alert alert-success">
       Post Modifié
     </div>
-    <br>
-    <br>
-
-    <a class="btn btn-success" routerLink="/list">Retour à la liste</a>
   </div>
-
-
 </div>

@@ -35,7 +35,7 @@ export class ListPostComponent implements OnInit {
   postList: Post[];
   post: Post;
   constructor(private psp: PostServiceProvider, private router: Router, private auth: AuthServiceProvider) {
-    this.post = new Post(1, '', '');
+    this.post = new Post(1, '', '', null, null);
   }
 
   ngOnInit() {
@@ -55,6 +55,10 @@ export class ListPostComponent implements OnInit {
       );
   }
 
+  private editPost(post: Post) {
+    post.edit = true;
+  }
+
   private getPosts() {
     this.psp.getPosts()
       .subscribe(data => {
@@ -70,9 +74,9 @@ export class ListPostComponent implements OnInit {
         }
       });
   }
-  onNotify(message: string): void {
-    console.log('Log Post on Notify' + JSON.stringify(this.post));
-    this.postList.splice(0, 0, this.post);
-    this.post = new Post(1, '', '');
+  onNotify(post): void {
+    console.log('Log Post on Notify' + post);
+    this.postList.splice(0, 0, JSON.parse(post));
+    this.post = new Post(1, '', '', null, null);
   }
 }

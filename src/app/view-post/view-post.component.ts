@@ -12,7 +12,7 @@ export class ViewPostComponent implements OnInit {
   post: Post;
   id: number;
   constructor(private psp: PostServiceProvider, private route: ActivatedRoute, private router: Router) {
-    this.post = new Post(1, '', '');
+    this.post = new Post(1, '', '', null, null);
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });

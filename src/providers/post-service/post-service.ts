@@ -53,7 +53,6 @@ export class PostServiceProvider {
   }
 
   editPost(post, id): Observable<any> {
-    console.log(this.auth.getToken());
     return this.http
       .put(this.urlApi + '/' + id, post, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.auth.getToken()),
